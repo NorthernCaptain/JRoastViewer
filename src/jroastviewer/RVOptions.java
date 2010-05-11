@@ -46,7 +46,10 @@ public class RVOptions {
             sqlcon = null;
         }
         else
+        {
             con = DriverManager.getConnection(dbName, dbUser, dbPasswd);
+            con.createStatement().executeUpdate("SET DATEFORMAT dmy");
+        }
         return con;
     }
     
