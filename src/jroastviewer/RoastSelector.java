@@ -45,7 +45,7 @@ import org.jfree.ui.*;
  */
 public class RoastSelector extends javax.swing.JFrame {
     
-    private String version = "1.1.2";
+    private String version = "1.1.0";
     
     /** Creates new form RoastSelector */
     public RoastSelector() {
@@ -770,16 +770,16 @@ public class RoastSelector extends javax.swing.JFrame {
         if(dateFromBox.isSelected() || dateToBox.isSelected())
         {
             if(dateFromBox.isSelected() && dateFromPicker.getDate()!=null)
-                sql += " and roastLoad>='" + new SimpleDateFormat("dd-MM-yyyy 00:00").format(dateFromPicker.getDate()) + "'";
+                sql += " and roastLoad>=cast('" + new SimpleDateFormat("MM/dd/yyyy 00:00").format(dateFromPicker.getDate()) + "' as datetime)";
              if(dateToBox.isSelected() && dateToPicker.getDate()!=null)
-                sql += " and roastLoad<='" + new SimpleDateFormat("dd-MM-yyyy 23:59:59").format(dateToPicker.getDate()) + "'";           
+                sql += " and roastLoad<=cast('" + new SimpleDateFormat("MM/dd/yyyy 23:59:59").format(dateToPicker.getDate()) + "' as datetime)";
         } else
         {
           DateSpan ds = monthChooser.getSelectedDateSpan();
           Date day = ds == null ? new Date() : ds.getStartAsDate();
-          sql += " and roastLoad>='";
-          sql += new SimpleDateFormat("dd-MM-yyyy 00:00").format(day);
-          sql += "' and roastLoad <= '" + new SimpleDateFormat("dd-MM-yyyy 23:59:59").format(day) + "'";
+          sql += " and roastLoad>=cast('";
+          sql += new SimpleDateFormat("MM/dd/yyyy 00:00").format(day);
+          sql += "' as datetime) and roastLoad <= cast('" + new SimpleDateFormat("MM/dd/yyyy 23:59:59").format(day) + "' as datetime)";
         } 
         return sql;
     }
